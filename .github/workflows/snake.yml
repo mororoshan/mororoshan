@@ -1,0 +1,41 @@
+# Copy to: mororoshan/mororoshan/.github/workflows/snake.yml
+# Generates contribution snake GIF for profile README
+
+name: Generate Snake
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Platane/snk@v3
+        id: snake-gif
+        with:
+          github_user_name: mororoshan
+          gif_out_path: dist/github-contribution-grid-snake.gif
+          svg_out_path: dist/github-contribution-grid-snake.svg
+          snake_color: blue
+
+      - uses: Platane/snk@v3
+        id: snake-gif-dark
+        with:
+          github_user_name: mororoshan
+          gif_out_path: dist/github-contribution-grid-snake-dark.gif
+          svg_out_path: dist/github-contribution-grid-snake-dark.svg
+          snake_color: orange
+          dark_mode: true
+
+      - uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
